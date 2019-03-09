@@ -20,18 +20,19 @@ __global__ void reduction(float *out, float *in, unsigned size)
     __device__ __shared__ float partialSumVector[BLOCK_SIZE * 2];
     unsigned int t = threadIdx.x;
     unsigned int start = blockIdx.x * blockDim.x * 2;
-    if(t < size) {
+    if((start + t) < size) {
         partialSumVector[t] = in[start + t];
     } else partialSumVector[t] = 0.0;
-    if((blockDim.x + t) < size) {
+    if((start + blockDim.x + t) < size) {
         partialSumVector[blockDim.x + t] = in[start + blockDim.x + t];
     } else partialSumVector[blockDim.x + t] = 0.0;
 
     for(unsigned int stride = 1; stride <= blockDim.x; stride = stride * 2) {
         __syncthreads();
         if(t % stride == 0) {
-            partialSumVector[2*t] += partialSumVector[2*t + stride];
+                partialSumVector[2*t] += partialSumVector[2*t + stride];
         }
     }
+
     out[blockIdx.x] = partialSumVector[0];
 }
