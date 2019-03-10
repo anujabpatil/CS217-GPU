@@ -57,16 +57,16 @@ int main (int argc, char *argv[])
     B_sz = VecSize;
     C_sz = VecSize;
     
-    //h_A = (float*) malloc( sizeof(float)*A_sz );
-    cudaHostAlloc((void**) &h_A,VecSize*sizeof(float),cudaHostAllocDefault);
+    h_A = (float*) malloc( sizeof(float)*A_sz );
+    //cudaHostAlloc((void**) &h_A,VecSize*sizeof(float),cudaHostAllocDefault);
     for (unsigned int i=0; i < A_sz; i++) { h_A[i] = (rand()%100)/100.00; }
 
-    //h_B = (float*) malloc( sizeof(float)*B_sz );
-    cudaHostAlloc((void**) &h_B,VecSize*sizeof(float),cudaHostAllocDefault);
+    h_B = (float*) malloc( sizeof(float)*B_sz );
+    //cudaHostAlloc((void**) &h_B,VecSize*sizeof(float),cudaHostAllocDefault);
     for (unsigned int i=0; i < B_sz; i++) { h_B[i] = (rand()%100)/100.00; }
 
-    //h_C = (float*) malloc( sizeof(float)*C_sz );
-    cudaHostAlloc((void**) &h_C,VecSize*sizeof(float),cudaHostAllocDefault);
+    h_C = (float*) malloc( sizeof(float)*C_sz );
+    //cudaHostAlloc((void**) &h_C,VecSize*sizeof(float),cudaHostAllocDefault);
     stopTime(&timer); printf("%f s\n", elapsedTime(timer));
     printf("Size Of vector: %u x %u\n  ", VecSize);
 
